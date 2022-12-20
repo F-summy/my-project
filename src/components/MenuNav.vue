@@ -1,15 +1,15 @@
 <template>
   <div class="menu-container">
-    <a
-      :href="item.path"
+    <router-link
+      :to="{ name: item.name }"
       class="content"
-      :class="{ selected: isSelected(item) }"
-      :key="item.path"
+      :exact="item.exact"
+      :key="item.name"
       v-for="item in list"
     >
       <Icon class="icons" :type="item.type"></Icon>
       <span class="text">{{ item.content }}</span>
-    </a>
+    </router-link>
   </div>
 </template>
 
@@ -22,24 +22,13 @@ export default {
   data() {
     return {
       list: [
-        { type: "home", content: "首页", path: "/" },
-        { type: "blog", content: "文章", path: "/blog" },
-        { type: "about", content: "关于我", path: "/about" },
-        { type: "code", content: "项目&效果", path: "/project" },
-        { type: "chat", content: "留言板", path: "/message" },
+        { name: "Home", type: "home", content: "首页", exact: true },
+        { name: "Blog", type: "blog", content: "文章", exact: false },
+        { name: "About", type: "about", content: "关于我", exact: true },
+        { name: "Project", type: "code", content: "项目&效果", exact: true },
+        { name: "Message", type: "chat", content: "留言板", exact: true },
       ],
     };
-  },
-  methods: {
-    isSelected(item) {
-      var link = item.path.toLowerCase(); // 菜单的链接地址
-      var curPathname = location.pathname.toLowerCase(); // 当前浏览器的访问路径
-      if (item.startWith) {
-        return curPathname.startsWith(link);
-      } else {
-        return curPathname === link;
-      }
-    },
   },
 };
 </script>
@@ -55,7 +44,7 @@ export default {
     padding-left: 35px;
     cursor: pointer;
     box-sizing: border-box;
-    &.selected {
+    &.router-link-active {
       color: @gray;
       background: darken(@words, 3%);
     }

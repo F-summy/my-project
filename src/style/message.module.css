@@ -1,0 +1,32 @@
+.message {
+  position: absolute;
+  z-index: 999;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) translateY(25px);
+  box-shadow: -2px 2px 5px rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  padding: 10px;
+  transition: 0.4s;
+  display: flex;
+  flex-wrap: nowrap;
+  color: aliceblue;
+  opacity: 0;
+  font-weight: 500;
+}
+.message div {
+  margin-left: 5px;
+  font-size: 14px;
+}
+.info {
+  background: #6b9eee;
+}
+.success {
+  background: #7ebf50;
+}
+.warn {
+  background: #dc6a12;
+}
+.error {
+  background: #cc3600;
+}

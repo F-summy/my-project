@@ -29,6 +29,9 @@ export default {
 .side-aside-container {
   box-sizing: border-box;
   overflow: hidden;
+  background-color: @dark;
+  width: 100%;
+  height: 100%;
 
   .avatar-container {
     margin-top: 35px;
