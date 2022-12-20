@@ -49,9 +49,8 @@ export default {
 
 <style lang="less" scoped>
 .image-load-container {
-  width: 400px;
-  height: 400px;
-  border: 2px solid #333;
+  width: 100%;
+  height: 100%;
   position: relative;
   overflow: hidden;
 
