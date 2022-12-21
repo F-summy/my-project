@@ -1,11 +1,17 @@
 <template>
-  <div class="home-container" ref="home" @wheel="handleWheel">
+  <div
+    class="home-container"
+    ref="home"
+    @wheel="handleWheel"
+    v-loading="isLoading"
+  >
     <ul
       class="image"
+      ref="image"
       :style="{ marginTop: marginTop }"
       @transitionend="animationEnd"
     >
-      <li v-for="item in banner" :key="item.id" class="item">
+      <li v-for="item in data" :key="item.id" class="item">
         <Carouselitem :data="item"></Carouselitem>
       </li>
     </ul>
@@ -15,7 +21,7 @@
     </div>
     <div
       class="icon-down"
-      v-show="index < banner.length - 1"
+      v-show="index < data.length - 1"
       @click="changeImage(index + 1)"
     >
       <Icons type="arrowDown"></Icons>
@@ -25,7 +31,7 @@
       <li
         @click="changeImage(i)"
         :class="{ active: i == index }"
-        v-for="(item, i) in banner"
+        v-for="(item, i) in data"
         :key="item.id"
       ></li>
     </ul>
@@ -36,14 +42,14 @@
 import Icons from "../../components/Icons.vue";
 import { getBanner } from "../../aip";
 import Carouselitem from "./Carouselitem.vue";
+import fetchData from "../../mixins";
 export default {
+  mixins: [fetchData([])],
   components: {
     Carouselitem,
     Icons,
   },
-  async created() {
-    this.banner = await getBanner();
-  },
+
   mounted() {
     this.containerHeight = this.$refs.home.clientHeight;
     window.addEventListener("resize", this.updateContainer);
@@ -53,7 +59,6 @@ export default {
   },
   data() {
     return {
-      banner: [],
       index: 0,
       containerHeight: 0,
       animation: false,
@@ -65,13 +70,17 @@ export default {
     },
   },
   methods: {
+    //获取数据
+    async fetchData() {
+      return await getBanner();
+    },
     changeImage(i) {
       this.index = i;
     },
     //监听鼠标滚动
     handleWheel(e) {
       if (this.animation) return;
-      if (e.deltaY > 0 && this.index < this.banner.length - 1) {
+      if (e.deltaY > 0 && this.index < this.data.length - 1) {
         this.index++;
         this.animation = true;
       }
@@ -101,6 +110,7 @@ export default {
   }
   width: 100%;
   height: 100%;
+
   position: relative;
   overflow: hidden;
   .image {

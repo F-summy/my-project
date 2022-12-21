@@ -1,10 +1,17 @@
 <template>
-  <div class="carouse-item">
-    <ImageLoad
-      @updateImage="updateDom"
-      :src="data.bigImg"
-      :placeholder="data.midImg"
-    ></ImageLoad>
+  <div
+    class="carouse-item"
+    ref="home"
+    @mousemove="mousemove"
+    @mouseleave="mouseleave"
+  >
+    <div class="item" ref="image" :style="imageMove">
+      <ImageLoad
+        @updateImage="updateDom"
+        :src="data.bigImg"
+        :placeholder="data.midImg"
+      ></ImageLoad>
+    </div>
     <div ref="title" class="title">{{ data.title }}</div>
     <div ref="description" class="description">{{ data.description }}</div>
   </div>
@@ -23,6 +30,10 @@ export default {
     return {
       titeWidth: null,
       descriptionWidth: null,
+      //尺寸数据
+      containerData: null,
+      imageData: null,
+      mouse: null,
     };
   },
   components: {
@@ -31,6 +42,31 @@ export default {
   mounted() {
     this.titeWidth = this.$refs.title.clientWidth;
     this.descriptionWidth = this.$refs.description.clientWidth;
+    this.getSize();
+    window.addEventListener("resize", this.getSize);
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.getSize);
+  },
+  computed: {
+    imageMove() {
+      //最大距离
+      if (!this.containerData || !this.imageData || !this.mouse) return;
+      const X = this.imageData.width - this.containerData.width;
+      const Y = this.imageData.height - this.containerData.height;
+
+      const left = (-X / this.containerData.width) * this.mouse.left;
+      const top = (-Y / this.containerData.height) * this.mouse.top;
+      return {
+        transform: `translate(${left}px, ${top}px)`,
+      };
+    },
+    center() {
+      return {
+        left: this.containerData.width / 2,
+        top: this.containerData.height / 2,
+      };
+    },
   },
   methods: {
     updateDom() {
@@ -50,6 +86,38 @@ export default {
 
       this.$refs.description.style.width = this.descriptionWidth + "px";
     },
+    //鼠标移动
+    mousemove(e) {
+      const rect = this.$refs.home.getBoundingClientRect();
+      this.mouse = {
+        left: e.clientX - rect.left,
+        top: e.clientY - rect.top,
+      };
+    },
+    //鼠标移出
+    mouseleave() {
+      this.mouse.left = this.center.left;
+      this.mouse.top = this.center.top;
+    },
+    getSize() {
+      //父容器尺寸
+      this.containerData = {
+        width: this.$refs.home.clientWidth,
+        height: this.$refs.home.clientHeight,
+      };
+
+      //图片尺寸
+      this.imageData = {
+        width: this.$refs.image.clientWidth,
+        height: this.$refs.image.clientHeight,
+      };
+
+      //鼠标默认尺寸
+      this.mouse = {
+        left: this.center.left,
+        top: this.center.top,
+      };
+    },
   },
 };
 </script>
@@ -58,9 +126,14 @@ export default {
 .carouse-item {
   width: 100%;
   height: 100%;
-  background: #000;
+  overflow: hidden;
   color: #fff;
   position: relative;
+  .item {
+    width: 110%;
+    height: 110%;
+    transition: 0.3s;
+  }
   .title,
   .description {
     position: absolute;

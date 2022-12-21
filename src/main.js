@@ -3,10 +3,9 @@ import App from "./App.vue";
 import "./style/common.less";
 import router from "./router";
 import "./mock/index";
-import { getBanner } from "./aip";
+import load from "./loading";
 
-getBanner().then((res) => console.log(res));
-
+Vue.directive("loading", load);
 new Vue({
   router,
   render: (h) => h(App),
