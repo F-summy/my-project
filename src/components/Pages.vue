@@ -57,7 +57,7 @@ export default {
     },
     //最大值
     maxNum() {
-      let max = this.minNum + this.limit;
+      let max = this.minNum + this.visibleNumber - 1;
       if (max > this.pageList) {
         max = this.pageList;
       }
@@ -97,6 +97,7 @@ export default {
     padding: 2px 4px;
     margin: 0 3px;
     color: #444;
+    white-space: nowrap;
     cursor: pointer;
     &.disabled {
       color: @lightWords;

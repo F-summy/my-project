@@ -1,4 +1,5 @@
-import "./mock.js";
+import "./banner.js";
+import "./blog.js";
 
 import Mock from "mockjs";
 
