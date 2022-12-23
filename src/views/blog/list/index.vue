@@ -4,7 +4,11 @@
       <span @click="handleClick(item)" :class="{ active: item.selected }">
         {{ item.name }}</span
       >
-      <span @click="handleClick(item)" :class="{ active: item.selected }">
+      <span
+        @click="handleClick(item)"
+        v-if="item.articleCount"
+        :class="{ active: item.selected }"
+      >
         {{ item.articleCount }}篇</span
       >
       <List @select="handleClick" :list="item.children"></List>
@@ -24,7 +28,7 @@ export default {
   methods: {
     handleClick(item) {
       this.$emit("select", item);
-      console.log(this.list);
+      // console.log(this.$listeners.select(item));
     },
   },
 };
@@ -35,7 +39,7 @@ export default {
 .list-container {
   width: 100%;
   height: 100%;
-  margin-left: 1em;
+  margin-left: 1.5em;
   list-style: none;
   font-size: 14px;
   li {

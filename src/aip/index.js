@@ -22,11 +22,11 @@ export async function getBlogId(id) {
   return await resquest.get(`/api/blog/${id}`);
 }
 //提交获取评论
-export async function postCommont(data) {
+export async function postComment(data) {
   return await resquest.post("/api/comment", data);
 }
 export async function getComment(blogid, page = 1, limit = 10) {
-  return await request.get("/api/comment", {
+  return await resquest.get("/api/comment", {
     params: {
       blogid,
       page,
