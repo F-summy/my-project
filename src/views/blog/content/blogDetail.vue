@@ -2,7 +2,7 @@
   <div class="blog-container">
     <Layout>
       <template #main>
-        <div class="main" v-loading="isLoading">
+        <div class="main" ref="mainScroll" v-loading="isLoading">
           <Content v-if="data" :blog="data"></Content>
           <Commont v-if="data"></Commont>
         </div>
@@ -13,6 +13,7 @@
         </div>
       </template>
     </Layout>
+    <Totop></Totop>
   </div>
 </template>
 
@@ -21,6 +22,7 @@ import fetchData from "../../../mixins";
 import { getBlogId } from "../../../aip";
 import Content from "./content.vue";
 import blogToc from "./blogToc.vue";
+import Totop from "../../../components/Totop.vue";
 import Commont from "../comment/index.vue";
 import Layout from "../../../components/Layout.vue";
 export default {
@@ -30,10 +32,25 @@ export default {
     blogToc,
     Layout,
     Commont,
+    Totop,
+  },
+  mounted() {
+    this.$refs.mainScroll.addEventListener("scroll", this.scroll);
+    this.$events.$on("setScroll", this.setScroll);
+  },
+  beforeDestroy() {
+    this.$events.$off("setScroll", this.setScroll);
+    this.$refs.mainScroll.removeEventListener("scroll", this.scroll);
   },
   methods: {
     async fetchData() {
       return await getBlogId();
+    },
+    scroll() {
+      this.$events.$emit("mainScroll", this.$refs.mainScroll);
+    },
+    setScroll(value) {
+      this.$refs.mainScroll.scrollTop = value;
     },
   },
 };

@@ -6,7 +6,6 @@
       <span>{{ subTitle }}</span>
     </h3>
     <DataList :list="list"></DataList>
-    <div class="loading" v-loading="isListLoading"></div>
   </div>
 </template>
 
@@ -27,10 +26,6 @@ export default {
       type: Array,
       default: () => [],
     },
-    isListLoading: {
-      type: Boolean,
-      default: false,
-    },
   },
   components: {
     DataForm,
@@ -39,9 +34,4 @@ export default {
 };
 </script>
 
-<style scoped lang="less">
-.loading {
-  position: relative;
-  height: 100px;
-}
-</style>
+<style scoped lang="less"></style>

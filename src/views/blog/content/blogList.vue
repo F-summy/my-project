@@ -1,5 +1,5 @@
 <template>
-  <div class="blog-list-container" ref="container" v-loading="isLoading">
+  <div class="blog-list-container" ref="mainContainer" v-loading="isLoading">
     <ul>
       <li v-for="item in data.rows" :key="item.id">
         <div class="thumb" v-if="item.thumb">
@@ -11,7 +11,7 @@
               },
             }"
           >
-            <img :src="item.thumb" :alt="item.title" :title="item.title" />
+            <img v-lzay="item.thumb" :alt="item.title" :title="item.title" />
           </router-link>
         </div>
         <div class="main">
@@ -66,12 +66,17 @@ export default {
   components: {
     Pager,
   },
-
+  mounted() {
+    this.$refs.mainContainer.addEventListener("scroll", this.scroll);
+  },
+  beforeDestroy() {
+    this.$refs.mainContainer.removeEventListener("scroll", this.scroll);
+  },
   watch: {
     async $route() {
       this.isLoading = true;
 
-      this.$refs.container.scrollTop = 0;
+      this.$refs.mainContainer.scrollTop = 0;
       this.data = await this.fetchData();
       this.isLoading = false;
     },
@@ -110,6 +115,9 @@ export default {
           },
         });
       }
+    },
+    scroll() {
+      this.$events.$emit("mainContainer", this.$refs.mainContainer);
     },
   },
 };

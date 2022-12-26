@@ -1,2 +1,5 @@
 import Vue from "vue";
-export default new Vue({});
+const events = new Vue({});
+Vue.prototype.$events = events;
+
+export default events;
