@@ -34,3 +34,11 @@ export async function getComment(blogid, page = 1, limit = 10) {
     },
   });
 }
+//获取全局设置
+export async function getSetting() {
+  return await resquest.get("/api/setting");
+}
+//关于我
+export async function getAbout() {
+  return await resquest.get("/api/about");
+}

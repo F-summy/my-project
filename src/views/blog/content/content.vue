@@ -13,6 +13,7 @@
 
 <script>
 import formate from "../../../utils/formate";
+import { setRouterTitle } from "../../../utils/title";
 import "highlight.js/styles/github.css";
 export default {
   props: {
@@ -21,6 +22,12 @@ export default {
       required: true,
     },
   },
+  created() {
+    if (this.blog.title) {
+      setRouterTitle(this.blog.title);
+    }
+  },
+
   methods: {
     formate,
   },

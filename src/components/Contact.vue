@@ -1,28 +1,51 @@
 <template>
-  <div class="contact-container">
-    <div class="content" :key="index" v-for="(item, index) in list">
-      <Icon class="icons" :type="item.type"></Icon>
-      <span class="text">{{ item.content }}</span>
+  <div class="contact-container" v-if="data.github">
+    <div class="content">
+      <a target="_blank" :href="data.github">
+        <div class="icon">
+          <Icon type="github" />
+        </div>
+        <span>{{ data.githubName }}</span>
+      </a>
+    </div>
+    <div class="content">
+      <a :href="`mailto:${data.mail}`">
+        <div class="icon">
+          <Icon type="mail" />
+        </div>
+        <span>{{ data.mail }}</span>
+      </a>
+    </div>
+    <div class="content">
+      <a>
+        <div class="icon">
+          <Icon type="qq" />
+        </div>
+        <span>{{ data.qq }}</span>
+      </a>
+      <div class="pop"></div>
+    </div>
+    <div class="content">
+      <a>
+        <div class="icon weixin">
+          <Icon type="weixin" />
+        </div>
+        <span>{{ data.weixin }}</span>
+      </a>
+      <div class="pop"></div>
     </div>
   </div>
 </template>
 
 <script>
 import Icon from "@/components/Icons.vue";
+import { mapState } from "vuex";
 export default {
   components: {
     Icon,
   },
-  data() {
-    return {
-      list: [
-        { type: "github", content: "NAO FAKUANG" },
-        { type: "mail", content: "7752@163.com" },
-        { type: "qq", content: "35415623" },
-        { type: "weixin", content: "Y55478978" },
-      ],
-    };
-  },
+
+  computed: { ...mapState("setting", ["data"]) },
 };
 </script>
 
@@ -35,14 +58,17 @@ export default {
     display: flex;
     padding: 5px;
     padding-left: 10px;
+    a {
+      display: flex;
+    }
     &:hover {
       color: @gray;
     }
-    .icons {
+    .icon {
       font-size: 18px;
       margin: 0 10px;
     }
-    .text {
+    span {
       font-size: 12px;
       margin-top: 3px;
     }

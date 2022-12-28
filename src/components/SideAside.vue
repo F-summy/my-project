@@ -1,10 +1,8 @@
 <template>
   <div class="side-aside-container">
     <div class="content">
-      <Avatar
-        url="https://ts1.cn.mm.bing.net/th/id/R-C.c55c3eff199d241cea55093eb4fe4140?rik=jZq5IA9bwL3wCA&riu=http%3a%2f%2fimg.touxiangwu.com%2f2020%2f3%2fIZrQFr.jpg&ehk=xLpjiqiA3RYXxAYyRTV4FGqSSEBg34qYxYzkJ9TPUkQ%3d&risl=&pid=ImgRaw&r=0"
-      />
-      <h1 class="title">小馋&喵</h1>
+      <Avatar v-if="data.avatar" :url="data.avatar" />
+      <h1 class="title">{{ data.siteTitle }}</h1>
       <MenuNav />
       <Contact />
     </div>
@@ -15,11 +13,15 @@
 import Avatar from "./Avatar.vue";
 import Contact from "./Contact.vue";
 import MenuNav from "./MenuNav.vue";
+import { mapState } from "vuex";
 export default {
   components: {
     Avatar,
     Contact,
     MenuNav,
+  },
+  computed: {
+    ...mapState("setting", ["data"]),
   },
 };
 </script>

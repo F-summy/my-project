@@ -3,7 +3,7 @@
     class="home-container"
     ref="home"
     @wheel="handleWheel"
-    v-loading="isLoading"
+    v-loading="loading"
   >
     <ul
       class="image"
@@ -40,16 +40,16 @@
 
 <script>
 import Icons from "../../components/Icons.vue";
-import { getBanner } from "../../aip";
 import Carouselitem from "./Carouselitem.vue";
-import fetchData from "../../mixins";
+import { mapState } from "vuex";
 export default {
-  mixins: [fetchData([])],
   components: {
     Carouselitem,
     Icons,
   },
-
+  created() {
+    this.$store.dispatch("banner/fetchBanner");
+  },
   mounted() {
     this.containerHeight = this.$refs.home.clientHeight;
     window.addEventListener("resize", this.updateContainer);
@@ -68,12 +68,11 @@ export default {
     marginTop() {
       return -this.index * this.containerHeight + "px";
     },
+    ...mapState("banner", ["loading", "data"]),
   },
   methods: {
     //获取数据
-    async fetchData() {
-      return await getBanner();
-    },
+
     changeImage(i) {
       this.index = i;
     },

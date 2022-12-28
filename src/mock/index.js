@@ -1,5 +1,7 @@
 import "./banner.js";
 import "./blog.js";
+import "./setting.js";
+import "./about";
 
 import Mock from "mockjs";
 

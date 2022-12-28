@@ -9,7 +9,7 @@ function setImage(item) {
     const dom = item.dom.getBoundingClientRect();
     const height = dom.height;
     const clientHeight = document.documentElement.clientHeight;
-    if (dom.top < clientHeight && dom.top >= -height && dom.top != 0) {
+    if (dom.top < clientHeight && dom.top >= -height) {
       item.dom.src = item.src;
       arr = arr.filter((i) => i !== item);
     }
