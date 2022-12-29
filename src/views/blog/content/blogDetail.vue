@@ -44,7 +44,12 @@ export default {
   },
   methods: {
     async fetchData() {
-      return await getBlogId();
+      let resp = await getBlogId(this.$route.params.id);
+      if (!resp) {
+        this.$router.push("/404");
+        return;
+      }
+      return resp;
     },
     scroll() {
       this.$events.$emit("mainScroll", this.$refs.mainScroll);
@@ -52,6 +57,13 @@ export default {
     setScroll(value) {
       this.$refs.mainScroll.scrollTop = value;
     },
+  },
+  updated() {
+    const hash = location.hash;
+    location.hash = "";
+    setTimeout(() => {
+      location.hash = hash;
+    }, 50);
   },
 };
 </script>

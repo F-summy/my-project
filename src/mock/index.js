@@ -2,6 +2,8 @@ import "./banner.js";
 import "./blog.js";
 import "./setting.js";
 import "./about";
+import "./message";
+import "./project";
 
 import Mock from "mockjs";
 

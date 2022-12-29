@@ -1,12 +1,17 @@
 <template>
   <div class="about-container" v-loading="loading">
-    <iframe class="content" v-if="data" :src="data" frameborder="0"></iframe>
+    <Empty v-if="!data && !loading"></Empty>
+    <iframe class="content" v-else :src="data" frameborder="0"></iframe>
   </div>
 </template>
 
 <script>
 import { getAbout } from "../../aip";
+import Empty from "../../components/Empty.vue";
 export default {
+  components: {
+    Empty,
+  },
   data() {
     return {
       data: "",

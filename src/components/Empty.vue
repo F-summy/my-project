@@ -13,10 +13,11 @@ export default {};
 <style scoped lang="less">
 @import "//at.alicdn.com/t/font_2164449_nalfgtq7il.css";
 .empty-container {
-  height: 100%;
-  width: 100%;
   display: flex;
   justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
   .iconfont {
     font-size: 60px;
     color: #ccc;

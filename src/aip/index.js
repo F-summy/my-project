@@ -42,3 +42,19 @@ export async function getSetting() {
 export async function getAbout() {
   return await resquest.get("/api/about");
 }
+//效果项目
+export async function getProject() {
+  return await resquest.get("/api/project");
+}
+//留言板
+export async function getMessage(page = 1, limit = 10) {
+  return await resquest.get("/api/message", {
+    params: {
+      page,
+      limit,
+    },
+  });
+}
+export async function postMessage(data) {
+  return await resquest.post("/api/message", data);
+}

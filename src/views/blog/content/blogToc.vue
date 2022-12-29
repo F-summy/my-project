@@ -20,7 +20,7 @@ export default {
   },
   data() {
     return {
-      anchor: "article-md-title-2",
+      anchor: "article-md-title-1",
     };
   },
   mounted() {
